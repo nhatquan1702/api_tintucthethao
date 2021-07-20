@@ -105,7 +105,7 @@ def get_identity_if_logedin():
 
 def check_post_exist(id_post):
     cur = con.cursor()
-    cur.execute("SELECT rating from post where id_post='"+str(id_post)+"'")
+    cur.execute("SELECT post_view from post where post_id='"+str(id_post)+"'")
     rows = cur.fetchall()
     if len(rows) != 0:
         return True
@@ -221,7 +221,7 @@ def add_view_to_post(id_post):
     if not check_post_exist:
         return jsonify({"status":0}),200
     cur = con.cursor()
-    cur.execute("update post set rating= rating + "+str(1)+" where id_post='"+str(id_post)+"'")
+    cur.execute("update post set rating= rating + "+str(1)+" where post_id='"+str(id_post)+"'")
     con.commit()
     return jsonify({"status":1}),200
 
@@ -240,7 +240,7 @@ def post_approve(id_post):
     # Có quyền chỉnh sửa
     if role == 1:
         cur = con.cursor()
-        cur.execute("update post set status=1 where id_post='"+str(id_post)+"'")
+        cur.execute("update post set status=1 where post_id='"+str(id_post)+"'")
         con.commit()
         return jsonify({"status":1}),200
     # Không có quyền chỉnh sửa
@@ -262,7 +262,7 @@ def post_del(id_post):
         return jsonify({"status":0}),200
     elif role == 1:
         cur = con.cursor()
-        cur.execute("DELETE FROM post WHERE id_post=%s;",(id_post,))
+        cur.execute("DELETE FROM post WHERE post_id=%s;",(id_post,))
         con.commit()
         return jsonify({"status":1}),200
 
@@ -306,7 +306,7 @@ def post_add():
     
     # Get last post id
     cur = con.cursor()
-    cur.execute("SELECT id_post from post order by id_post desc limit 1")
+    cur.execute("SELECT post_id from post order by post_id desc limit 1")
     rows = cur.fetchall()
     lastid= rows[0][0]
 
@@ -380,7 +380,7 @@ def post_edit(id_post):
     email= get_jwt_identity()
 
     cur = con.cursor()
-    cur.execute("update post set title=%s,content=%s,status=%s,img=%s,id_category=%s where id_post= %s",(title,content,status,img_url,id_category,id_post))
+    cur.execute("update post set title=%s,content=%s,status=%s,img=%s,id_category=%s where post_id= %s",(title,content,status,img_url,id_category,id_post))
     con.commit()
     return jsonify({"status":7}),200
 
@@ -393,7 +393,7 @@ def get_post(id_post):
         return jsonify({'status':0}),200
 
     cur = con.cursor()
-    cur.execute("SELECT id_post,post.title,post.content,post.img,post.create_time,post.rating,account.username from post inner join account on post.create_by= account.id_account where id_post= "+str(id_post))
+    cur.execute("SELECT post_id,post.title,post.content,post.img,post.create_time,post.rating,account.username from post inner join account on post.create_by= account.id_account where post_id= "+str(id_post))
     rows = cur.fetchall()
     colname=[]
     for i in range(0,7):
@@ -407,7 +407,7 @@ def get_post(id_post):
         rtlist.append(dic)
     
     cur = con.cursor()
-    cur.execute("update post set rating= rating + "+str(1)+" where id_post='"+str(id_post)+"'")
+    cur.execute("update post set rating= rating + "+str(1)+" where post_id='"+str(id_post)+"'")
     con.commit()
 
     js=json.dumps(rtlist,default = myconverter,ensure_ascii=False).encode('utf8')

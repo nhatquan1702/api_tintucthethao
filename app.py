@@ -977,8 +977,8 @@ def test():
 # ----------------------------
 # ----------------------------
 # ----------------------------
-@app.route('/quan/tiso',methods=['GET'])
-def quan_ti_so():
+@app.route('/khoa/tiso',methods=['GET'])
+def khoa_ti_so():
     try:
         cur = con.cursor()
         cur.execute("SELECT  match_id ,clb_home_name,clb_guess_name,SUBSTRING(match_result,1,1)  as H ,SUBSTRING(match_result,3,1) as G FROM Match limit 1000")
@@ -998,8 +998,8 @@ def quan_ti_so():
     js=json.dumps(rtlist,default = myconverter,ensure_ascii=False).encode('utf8')
     return js,200
 
-@app.route('/quan/get_ketqua_nam/<int:nam>',methods=['GET'])
-def quan_get_ketqua_nam(nam):
+@app.route('/khoa/get_ketqua_nam/<int:nam>',methods=['GET'])
+def khoa_get_ketqua_nam(nam):
     try:
         cur = con.cursor()
         cur.execute("""
@@ -1023,8 +1023,8 @@ def quan_get_ketqua_nam(nam):
     js=json.dumps(rtlist,default = myconverter,ensure_ascii=False).encode('utf8')
     return js,200
 
-@app.route('/quan/get_bxh_year/<int:nam>',methods=['GET'])
-def quan_Get_bxh_year(nam):
+@app.route('/khoa/get_bxh_year/<int:nam>',methods=['GET'])
+def khoa_Get_bxh_year(nam):
     try:
         cur = con.cursor()
         cur.execute("""
@@ -1049,8 +1049,8 @@ def quan_Get_bxh_year(nam):
     js=json.dumps(rtlist,default = myconverter,ensure_ascii=False).encode('utf8')
     return js,200
 
-@app.route('/quan/get_all_bxh_doi/<clb_name>',methods=['GET'])
-def quan_get_all_bxh_doi(clb_name):
+@app.route('/khoa/get_all_bxh_doi/<clb_name>',methods=['GET'])
+def khoa_get_all_bxh_doi(clb_name):
     try:
         cur = con.cursor()
         cur.execute("""
@@ -1077,8 +1077,8 @@ def quan_get_all_bxh_doi(clb_name):
     js=json.dumps(rtlist,default = myconverter,ensure_ascii=False).encode('utf8')
     return js,200
 
-@app.route('/quan/get_bxh_clb_nameYear/<clb_name>/<int:year>',methods=['GET'])
-def quan_get_bxh_clb_nameYeari(clb_name,year):
+@app.route('/khoa/get_bxh_clb_nameYear/<clb_name>/<int:year>',methods=['GET'])
+def khoa_get_bxh_clb_nameYeari(clb_name,year):
     try:
         cur = con.cursor()
         cur.execute("""
@@ -2045,11 +2045,11 @@ def quan_dohinhrasan(match_id):
     js=json.dumps(rtlist,default = myconverter,ensure_ascii=False).encode('utf8')
     return js,200
 
-@app.route('/quan/search/<tuquan>',methods=['GET'])
-def quan_serchbaiviet(tuquan):
+@app.route('/quan/search/<tukhoa>',methods=['GET'])
+def quan_serchbaiviet(tukhoa):
     try:
         cur = con.cursor()
-        cur.execute("select post_id,post_title,post_img,post_create_time,post_view from post where post_title ilike '%"+tuquan+"%'" )
+        cur.execute("select post_id,post_title,post_img,post_create_time,post_view from post where post_title ilike '%"+tukhoa+"%'" )
         rows = cur.fetchall()
     except:
         return jsonify({'status':0}),200
@@ -2186,8 +2186,8 @@ def quan_match_result(match_id):
 
 
 
-@app.route('/quan/match_result/<clb_name>',methods=['GET'])
-def quan_match_result(clb_name):
+@app.route('/nhan/match_result/<clb_name>',methods=['GET'])
+def nhan_match_result(clb_name):
     try:
         cur = con.cursor()
         cur.execute("""
@@ -2211,8 +2211,8 @@ def quan_match_result(clb_name):
     js=json.dumps(rtlist,default = myconverter,ensure_ascii=False).encode('utf8')
     return js,200
 
-@app.route('/quan/upcomming/<clb_name>',methods=['GET'])
-def quan_upcommintt(clb_name):
+@app.route('/nhan/upcomming/<clb_name>',methods=['GET'])
+def nhan_upcommintt(clb_name):
     try:
         cur = con.cursor()
         cur.execute("""
@@ -2236,8 +2236,8 @@ def quan_upcommintt(clb_name):
     js=json.dumps(rtlist,default = myconverter,ensure_ascii=False).encode('utf8')
     return js,200
 
-@app.route('/quan/lastest_match/<clb_name>',methods=['GET'])
-def quan_lastest_match(clb_name):
+@app.route('/nhan/lastest_match/<clb_name>',methods=['GET'])
+def nhan_lastest_match(clb_name):
     try:
         cur = con.cursor()
         cur.execute("""
@@ -2263,8 +2263,8 @@ def quan_lastest_match(clb_name):
     js=json.dumps(rtlist,default = myconverter,ensure_ascii=False).encode('utf8')
     return js,200
 
-@app.route('/quan/user/<email>/<password>',methods=['GET'])
-def quan_user(email,password):
+@app.route('/nhan/user/<email>/<password>',methods=['GET'])
+def nhan_user(email,password):
     try:
         cur = con.cursor()
         cur.execute("""
@@ -2288,8 +2288,8 @@ def quan_user(email,password):
     js=json.dumps(rtlist,default = myconverter,ensure_ascii=False).encode('utf8')
     return js,200
 
-@app.route('/quan/user/<email>/<password>',methods=['POST'])
-def quan_create_user(email,password):
+@app.route('/nhan/user/<email>/<password>',methods=['POST'])
+def nhan_create_user(email,password):
     try:
         cur = con.cursor()
         cur.execute("""
@@ -2309,8 +2309,8 @@ def quan_create_user(email,password):
         return jsonify({'status':0}),200
     return jsonify({'status':2}),200
 
-@app.route('/quan/user/',methods=['POST'])
-def quan_user_posts():
+@app.route('/nhan/user/',methods=['POST'])
+def nhan_user_posts():
     request_data = request.get_json()
     account_email = request_data['account_email']
     account_password = request_data['account_password']
@@ -2334,8 +2334,8 @@ def quan_user_posts():
         return jsonify({'status':0}),200
     return jsonify({'status':2}),200
 
-@app.route('/quan/user/del/<account_email>',methods=['GET'])
-def quan_user_del(account_email):
+@app.route('/nhan/user/del/<account_email>',methods=['GET'])
+def nhan_user_del(account_email):
     try:
         cur = con.cursor()
         cur.execute("""
@@ -2355,8 +2355,8 @@ def quan_user_del(account_email):
         return jsonify({'status':0}),200
     return jsonify({'status':2}),200
      
-@app.route('/quan/user/',methods=['PUT'])
-def quan_update_user():
+@app.route('/nhan/user/',methods=['PUT'])
+def nhan_update_user():
     request_data = request.get_json()
     account_email = request_data['account_email']
     account_password = request_data['account_password']
@@ -2380,8 +2380,8 @@ def quan_update_user():
         return jsonify({'status':0}),200
     return jsonify({'status':2}),200
       
-@app.route('/quan/users',methods=['GET'])
-def quan_get_all_user():
+@app.route('/nhan/users',methods=['GET'])
+def nhan_get_all_user():
     try:
         cur = con.cursor()
         cur.execute("""
@@ -2407,8 +2407,8 @@ def quan_get_all_user():
     js=json.dumps(rtlist,default = myconverter,ensure_ascii=False).encode('utf8')
     return js,200
 
-@app.route('/quan/analysis',methods=['GET'])
-def quan_analysis():
+@app.route('/nhan/analysis',methods=['GET'])
+def nhan_analysis():
     try:
         cur = con.cursor()
         cur.execute("""
@@ -2435,8 +2435,8 @@ def quan_analysis():
     return js,200
 
 
-@app.route('/quan/getNgayDaDau/<date>',methods=['GET'])
-def quan_ngay_da_dau(date):
+@app.route('/khai/getNgayDaDau/<date>',methods=['GET'])
+def khai_ngay_da_dau(date):
     try:
         cur = con.cursor()
         cur.execute("""
@@ -2464,8 +2464,8 @@ def quan_ngay_da_dau(date):
     js=json.dumps(rtlist)
     return js,200
 
-@app.route('/quan/getNgaySapDau/<date>',methods=['GET'])
-def quan_getngaysapdau(date):
+@app.route('/khai/getNgaySapDau/<date>',methods=['GET'])
+def khai_getngaysapdau(date):
     try:
         cur = con.cursor()
         cur.execute("""
@@ -2493,8 +2493,8 @@ def quan_getngaysapdau(date):
     js=json.dumps(rtlist)
     return js,200
 
-@app.route('/quan/getTranDau/<date>',methods=['GET'])
-def quan_gettrandau(date):
+@app.route('/khai/getTranDau/<date>',methods=['GET'])
+def khai_gettrandau(date):
     try:
         cur = con.cursor()
         cur.execute("""
@@ -2521,8 +2521,8 @@ def quan_gettrandau(date):
     js=json.dumps(rtlist,default = myconverter,ensure_ascii=False).encode('utf8')
     return js,200
 
-@app.route('/quan/getbaiviet/<email>/<date>',methods=['GET'])
-def quan_getbaiviet_date_email(email,date):
+@app.route('/khai/getbaiviet/<email>/<date>',methods=['GET'])
+def khai_getbaiviet_date_email(email,date):
     try:
         cur = con.cursor()
         cur.execute("""
@@ -2551,8 +2551,8 @@ def quan_getbaiviet_date_email(email,date):
 
 
 
-@app.route('/quan/add/post',methods=['POST'])
-def quan_add_post():
+@app.route('/khai/add/post',methods=['POST'])
+def khai_add_post():
     request_data = request.get_json()
     post_title = request_data['post_title']
     post_content = request_data['post_content']
@@ -2588,8 +2588,8 @@ def quan_add_post():
         return jsonify({'status':str(e)}),200
     return jsonify({'status':2}),200
 
-@app.route('/quan/edit/post/<post_id>',methods=['POST'])
-def quan_edit_post(post_id):
+@app.route('/khai/edit/post/<post_id>',methods=['POST'])
+def khai_edit_post(post_id):
     request_data = request.get_json()
     post_title = request_data['post_title']
     post_content = request_data['post_content']
@@ -2614,8 +2614,8 @@ def quan_edit_post(post_id):
         return jsonify({'status':0}),200
     return jsonify({'status':2}),200
 
-@app.route('/quan/del/post/<post_id>',methods=['POST'])
-def quan_del_post(post_id):
+@app.route('/khai/del/post/<post_id>',methods=['POST'])
+def khai_del_post(post_id):
     try:
         cur=con.cursor()
         cur.execute("update post set post_status= %s where post_id =%s",('-1',post_id,))
@@ -2626,8 +2626,8 @@ def quan_del_post(post_id):
         return jsonify({'status':0}),200
     return jsonify({'status':2}),200
 
-@app.route('/quan/getbaiviet/<account_email>',methods=['GET'])
-def quan_getbaiviet(account_email):
+@app.route('/khai/getbaiviet/<account_email>',methods=['GET'])
+def khai_getbaiviet(account_email):
     try:
         cur = con.cursor()
         cur.execute("""
